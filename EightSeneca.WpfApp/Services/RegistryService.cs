@@ -1,5 +1,5 @@
-﻿using System;
-using Microsoft.Win32;
+﻿using Microsoft.Win32;
+using System;
 
 namespace EightSeneca.WpfApp.Services
 {
@@ -82,15 +82,6 @@ namespace EightSeneca.WpfApp.Services
                 System.Diagnostics.Debug.WriteLine($"Error reading registry value {valueName}: {ex.Message}");
                 return defaultValue;
             }
-        }
-
-        /// <summary>
-        /// Starts monitoring registry for changes (to be implemented with timer)
-        /// </summary>
-        public void StartMonitoring()
-        {
-            // Will be implemented with timer-based polling
-            System.Diagnostics.Debug.WriteLine("Registry monitoring started");
         }
 
         public void Dispose()

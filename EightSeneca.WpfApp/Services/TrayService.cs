@@ -64,8 +64,6 @@ namespace EightSeneca.WpfApp.Services
             catch (Exception ex)
             {
                 System.Diagnostics.Debug.WriteLine($"Could not load icon: {ex.Message}");
-
-                // CÁCH 2: Tạo icon programmatically như fallback
                 CreateDefaultIcon();
             }
         }

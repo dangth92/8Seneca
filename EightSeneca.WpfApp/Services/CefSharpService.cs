@@ -10,6 +10,7 @@ namespace EightSeneca.WpfApp.Services
     {
         private ChromiumWebBrowser _browser;
         private string _currentUrl;
+        private bool _isInitialized = false;
 
         public object BrowserControl => _browser;
 
@@ -21,44 +22,37 @@ namespace EightSeneca.WpfApp.Services
 
         public async Task InitializeAsync()
         {
-            var settings02 = new CefSettings()
-            {
-                CachePath = "C:\\Cache",
-                LogFile = "C:\\Debug.log",
-                LogSeverity = LogSeverity.Default
-            };
-            //Perform dependency check to make sure all relevant resources are in our output directory.
-            Cef.Initialize(settings02, performDependencyCheck: true, browserProcessHandler: null);
-
-            _browser = new ChromiumWebBrowser();
-
             await Application.Current.Dispatcher.InvokeAsync(() =>
             {
                 try
                 {
                     if (!Cef.IsInitialized.GetValueOrDefault())
                     {
-                        //Set the cache path
-                        var settings = new CefSettings() 
-                        { 
-                            CachePath = "C:\\Cache",
-                            LogFile = "C:\\Debug.log", 
-                            LogSeverity = LogSeverity.Default
+                        var settings = new CefSettings
+                        {
+                            WindowlessRenderingEnabled = true,
+                            LogSeverity = LogSeverity.Verbose,
+                            MultiThreadedMessageLoop = false,
+                            PersistSessionCookies = false,
+                            //CachePath = "C:\\eightSeneca\\Cache",
+                            //LogFile = "C:\\eightSeneca\\Debug.log",
                         };
-                        //Perform dependency check to make sure all relevant resources are in our output directory.
+
+                        settings.CefCommandLineArgs.Add("disable-gpu", "1");
+                        settings.CefCommandLineArgs.Add("disable-gpu-compositing", "1");
+                        settings.CefCommandLineArgs.Add("disable-gpu-vsync", "1");
+                        settings.CefCommandLineArgs.Add("enable-begin-frame-scheduling", "1");
+                        settings.CefCommandLineArgs.Add("disable-webgl", "1");
+                        // Enable software rendering
+                        settings.CefCommandLineArgs.Add("enable-software-rasterizer", "1");
+                        settings.CefCommandLineArgs.Add("disable-direct-write", "1");
+
                         Cef.Initialize(settings, performDependencyCheck: true, browserProcessHandler: null);
-
-                        //var settings = new CefSettings()
-                        //{
-                        //    LogFile = "C:\\Debug.log", //You can customise this path
-                        //    LogSeverity = LogSeverity.Warning // You can change the log level
-                        //};
-
-                        //Cef.Initialize(settings);
                     }
 
                     _browser = new ChromiumWebBrowser();
                     ConfigureExternalLinkBlocking();
+                    _isInitialized = true;
                 }
                 catch (Exception ex)
                 {

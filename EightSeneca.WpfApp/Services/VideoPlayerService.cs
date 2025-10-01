@@ -1,7 +1,5 @@
-﻿using System;
-using System.Windows;
-using LibVLCSharp.Shared;
-using System.Windows.Threading;
+﻿using LibVLCSharp.Shared;
+using System;
 
 namespace EightSeneca.WpfApp.Services
 {

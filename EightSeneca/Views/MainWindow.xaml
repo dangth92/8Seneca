@@ -1,0 +1,29 @@
+﻿<Window x:Class="EightSeneca.Views.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="clr-namespace:EightSeneca.ViewModels"
+        WindowStyle="None" WindowState="Maximized" ResizeMode="NoResize"
+        KeyDown="Window_KeyDown"
+        ShowInTaskbar="False"
+        Topmost="True">
+    <Window.DataContext>
+        <vm:MainWindowViewModel />
+    </Window.DataContext>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="7*"/>
+            <ColumnDefinition Width="3*"/>
+        </Grid.ColumnDefinitions>
+        <ContentControl Content="{Binding WebEngineView}" Grid.Column="0"/>
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <vlc:VideoView Source="{Binding Video1}" Grid.Row="0" />
+            <vlc:VideoView Source="{Binding Video2}" Grid.Row="1" />
+            <vlc:VideoView Source="{Binding Video3}" Grid.Row="2" />
+        </Grid>
+    </Grid>
+</Window>

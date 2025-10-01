@@ -1,0 +1,27 @@
+﻿<Window x:Class="WpfApp.Views.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="Main Window" Height="200" Width="400"
+        WindowStartupLocation="CenterScreen">
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Row 1: Buttons -->
+        <StackPanel Orientation="Horizontal" Grid.Row="0" HorizontalAlignment="Center" Margin="0 0 0 10">
+            <Button Content="Select Ground Water" Command="{Binding OpenGroundWaterDialog}" Margin="5"/>
+            <Button Content="Select Thermal" Command="{Binding OpenThermalDialog}" Margin="5"/>
+        </StackPanel>
+
+        <!-- Row 2: Labels -->
+        <StackPanel Orientation="Horizontal" Grid.Row="1" HorizontalAlignment="Center">
+            <Label Content="{Binding GroundWaterMethod}" Margin="5"/>
+            <Label Content="{Binding ThermalMethod}" Margin="5"/>
+        </StackPanel>
+    </Grid>
+</Window>

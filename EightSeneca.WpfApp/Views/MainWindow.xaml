@@ -1,0 +1,106 @@
+﻿<Window x:Class="EightSeneca.WpfApp.Views.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vlc="clr-namespace:LibVLCSharp.WPF;assembly=LibVLCSharp.WPF"
+        xmlns:wv2="clr-namespace:Microsoft.Web.WebView2.Wpf;assembly=Microsoft.Web.WebView2.Wpf"
+        Title="EightSeneca"
+        WindowStyle="None"
+        ResizeMode="NoResize"
+        WindowState="Maximized">
+
+    <Window.Resources>
+        <!-- Boolean to Visibility converter for showing/hiding video placeholders -->
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+
+        <!-- DataTemplate for browser fallback content -->
+        <DataTemplate x:Key="BrowserFallbackTemplate">
+            <Border Background="#2C3E50">
+                <TextBlock Text="Web Browser - Initializing..." 
+                           HorizontalAlignment="Center" 
+                           VerticalAlignment="Center"
+                           FontSize="16"
+                           Foreground="White"/>
+            </Border>
+        </DataTemplate>
+    </Window.Resources>
+
+    <Window.InputBindings>
+        <KeyBinding Key="Q" Modifiers="Alt" Command="{Binding HideWindowCommand}"/>
+    </Window.InputBindings>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="7*"/>
+            <ColumnDefinition Width="3*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- Web Browser Area (70%) - Simple approach -->
+        <ContentControl Grid.Column="0" 
+                       Content="{Binding WebBrowserService.BrowserControl}"
+                       HorizontalContentAlignment="Stretch"
+                       VerticalContentAlignment="Stretch"/>
+
+        <!-- Video Area (30%) - Divided into 3 equal horizontal sections -->
+        <Grid Grid.Column="1" Margin="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <!-- Video 1 Section -->
+            <Border Grid.Row="0" Background="#34495E" Margin="0">
+                <Grid>
+                    <vlc:VideoView x:Name="VideoView1" 
+                                   MediaPlayer="{Binding VideoPlayerService.Video1Player}"
+                                   HorizontalAlignment="Stretch"
+                                   VerticalAlignment="Stretch"
+                                   ClipToBounds="True"/>
+                    <!-- Show placeholder when video is NOT loaded -->
+                    <TextBlock Text="Video 1 - No video loaded" 
+                               HorizontalAlignment="Center" 
+                               VerticalAlignment="Center"
+                               FontSize="12"
+                               Foreground="LightGray"
+                               Visibility="{Binding ShowVideo1Placeholder, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                </Grid>
+            </Border>
+
+            <!-- Video 2 Section -->
+            <Border Grid.Row="1" Background="#2C3E50" Margin="0">
+                <Grid>
+                    <vlc:VideoView x:Name="VideoView2" 
+                                   MediaPlayer="{Binding VideoPlayerService.Video2Player}"
+                                   HorizontalAlignment="Stretch"
+                                   VerticalAlignment="Stretch"
+                                   ClipToBounds="True"/>
+                    <!-- Show placeholder when video is NOT loaded -->
+                    <TextBlock Text="Video 2 - No video loaded" 
+                               HorizontalAlignment="Center" 
+                               VerticalAlignment="Center"
+                               FontSize="12"
+                               Foreground="LightGray"
+                               Visibility="{Binding ShowVideo2Placeholder, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                </Grid>
+            </Border>
+
+            <!-- Video 3 Section -->
+            <Border Grid.Row="2" Background="#34495E" Margin="0">
+                <Grid>
+                    <vlc:VideoView x:Name="VideoView3" 
+                                   MediaPlayer="{Binding VideoPlayerService.Video3Player}"
+                                   HorizontalAlignment="Stretch"
+                                   VerticalAlignment="Stretch"
+                                   ClipToBounds="True"/>
+                    <!-- Show placeholder when video is NOT loaded -->
+                    <TextBlock Text="Video 3 - No video loaded" 
+                               HorizontalAlignment="Center" 
+                               VerticalAlignment="Center"
+                               FontSize="12"
+                               Foreground="LightGray"
+                               Visibility="{Binding ShowVideo3Placeholder, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                </Grid>
+            </Border>
+        </Grid>
+    </Grid>
+</Window>

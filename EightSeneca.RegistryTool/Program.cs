@@ -1,5 +1,4 @@
-﻿using EightSeneca.RegistryTool;
-using System;
+﻿using System;
 
 namespace EightSeneca.RegistryTool
 {
@@ -7,38 +6,70 @@ namespace EightSeneca.RegistryTool
     {
         static void Main(string[] args)
         {
-            var svc = new RegistryService();
+            var registryService = new RegistryService();
 
-            if (args.Length == 0) { ShowUsage(); return; }
+            if (args.Length == 0)
+            {
+                PrintUsage();
+                return;
+            }
 
-            var cmd = args[0].ToLowerInvariant();
-            switch (cmd)
+            string command = args[0].ToLower();
+
+            switch (command)
             {
                 case "create":
-                    svc.CreateDefaults(); break;
+                    registryService.CreateKeys();
+                    break;
+
                 case "list":
-                    svc.List(); break;
-                case "change":
-                    if (args.Length < 3) { Console.WriteLine("Usage: change <Key> <Value>"); return; }
-                    svc.Change(args[1], args[2]); break;
+                    registryService.ListKeys();
+                    break;
+
+                case "set":
+                    if (args.Length >= 3)
+                        registryService.SetValue(args[1], args[2]);
+                    else
+                        Console.WriteLine("Usage: set <key> <value>");
+                    break;
+
                 case "reset":
-                    if (args.Length < 2) { Console.WriteLine("Usage: reset <Key>"); return; }
-                    svc.Reset(args[1]); break;
-                case "remove":
-                    svc.RemoveAll(); break;
+                    if (args.Length >= 2)
+                        registryService.ResetValue(args[1]);
+                    else
+                        Console.WriteLine("Usage: reset <key>");
+                    break;
+
+                case "wipe":
+                    registryService.WipeKeys();
+                    break;
+
                 default:
-                    ShowUsage(); break;
+                    Console.WriteLine($"Unknown command: {command}");
+                    PrintUsage();
+                    break;
             }
         }
 
-        static void ShowUsage()
+        static void PrintUsage()
         {
-            Console.WriteLine("RegistryTool usage:");
-            Console.WriteLine("  create");
-            Console.WriteLine("  list");
-            Console.WriteLine("  change <Key> <Value>");
-            Console.WriteLine("  reset <Key>");
-            Console.WriteLine("  remove");
+            Console.WriteLine("EightSeneca Registry Tool - Simple Version");
+            Console.WriteLine("==========================================");
+            Console.WriteLine("Commands:");
+            Console.WriteLine("  create                    - Create registry keys");
+            Console.WriteLine("  list                      - List all keys");
+            Console.WriteLine("  set <key> <value>         - Set key value");
+            Console.WriteLine("  reset <key>               - Reset key to default");
+            Console.WriteLine("  wipe                      - Remove all keys");
+            Console.WriteLine("");
+            Console.WriteLine("Available keys: BrowserUrl, WebEngine, EnableZoom, EnableTouch,");
+            Console.WriteLine("                AllowExternalLinks, Video1Path, Video2Path, Video3Path");
+            Console.WriteLine("");
+            Console.WriteLine("Examples:");
+            Console.WriteLine("  EightSeneca.RegistryTool create");
+            Console.WriteLine("  EightSeneca.RegistryTool set BrowserUrl https://bing.com");
+            Console.WriteLine("  EightSeneca.RegistryTool set WebEngine CefSharp");
+            Console.WriteLine("  EightSeneca.RegistryTool set EnableZoom false");
         }
     }
 }

@@ -119,10 +119,10 @@ namespace EightSeneca.WpfApp.Services
                 switch (webEngine?.ToLower())
                 {
                     case "cefsharp":
-                        if (!Cef.IsInitialized.GetValueOrDefault())
-                        {
-                            return new WebView2Service();
-                        }
+                        //if (!Cef.IsInitialized.GetValueOrDefault())
+                        //{
+                        //    return new WebView2Service();
+                        //}
                         return new CefSharpService();
                     case "webview2":
                     default:

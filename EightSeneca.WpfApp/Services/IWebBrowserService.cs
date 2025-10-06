@@ -37,6 +37,8 @@ namespace EightSeneca.WpfApp.Services
         /// Initializes the web browser control asynchronously
         /// </summary>
         Task InitializeAsync();
+
+        bool IsExternalNavigation(string navigatingUrl);
     }
 
     /// <summary>

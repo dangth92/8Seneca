@@ -159,7 +159,7 @@ namespace EightSeneca.WpfApp.Services
             };
         }
 
-        private bool IsExternalNavigation(string navigatingUrl)
+        public bool IsExternalNavigation(string navigatingUrl)
         {
             try
             {

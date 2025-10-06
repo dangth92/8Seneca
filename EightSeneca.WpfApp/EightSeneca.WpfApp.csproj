@@ -239,4 +239,7 @@
   </Target>
   <Import Project="..\packages\Microsoft.Web.WebView2.1.0.3485.44\build\Microsoft.Web.WebView2.targets" Condition="Exists('..\packages\Microsoft.Web.WebView2.1.0.3485.44\build\Microsoft.Web.WebView2.targets')" />
   <Import Project="..\packages\CefSharp.Common.140.1.140\build\CefSharp.Common.targets" Condition="Exists('..\packages\CefSharp.Common.140.1.140\build\CefSharp.Common.targets')" />
+  <PropertyGroup>
+    <PostBuildEvent>xcopy "$(TargetDir)*.*" "$(SolutionDir)Applications\$(ProjectName)\" /E</PostBuildEvent>
+  </PropertyGroup>
 </Project>
